@@ -2,21 +2,13 @@
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{yyyy.MM.dd HH:mm:ss.SSS} - %p - Database Demo - %t - %m%n"
+            <pattern>%d{yyyy.MM.dd HH:mm:ss.SSS} - %p - Spring Boot 2 - %t - %m%n"
             </pattern>
         </encoder>
     </appender>
 
     <logger name="org.springframework">
         <level value="info"/>
-    </logger>
-
-    <logger name="org.hibernate">
-        <level value="debug"/>
-    </logger>
-
-    <logger name="org.hibernate.type">
-        <level value="debug"/>
     </logger>
 
     <root level="debug">
