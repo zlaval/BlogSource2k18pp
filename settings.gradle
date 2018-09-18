@@ -1,2 +1,4 @@
 rootProject.name = 'blog-source'
+include 'algorithms'
+include 'spring-boot2-demo'
 
