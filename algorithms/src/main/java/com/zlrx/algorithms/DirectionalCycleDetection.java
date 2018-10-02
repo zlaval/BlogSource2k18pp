@@ -39,17 +39,18 @@ public class DirectionalCycleDetection {
         for (Vertex vertex : parent.getNeighbours()) {
             if (vertex.isVisiting()) {
                 System.out.println("Cycle detected when visiting vertex " + vertex);
+                System.out.println("Finish Visiting vertex " + parent);
                 return;
             }
 
             if (!vertex.isVisited()) {
-                vertex.setVisited(true);
                 detectCycle(vertex);
             }
 
         }
-        parent.setVisiting(true);
+        parent.setVisited(true);
         parent.setVisiting(false);
+        System.out.println("Finish Visiting vertex " + parent);
     }
 
 
