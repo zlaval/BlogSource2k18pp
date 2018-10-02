@@ -9,20 +9,21 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "neighbours")
 public class Vertex {
 
     private int data;
     private boolean visited;
-    private List<Vertex> neighbour;
+    private boolean visiting;
+    private List<Vertex> neighbours;
 
     public Vertex(int data) {
         this.data = data;
-        this.neighbour = new LinkedList<>();
+        this.neighbours = new LinkedList<>();
     }
 
     public boolean addNeighbour(Vertex vertex) {
-        return neighbour.add(vertex);
+        return neighbours.add(vertex);
     }
 
 }

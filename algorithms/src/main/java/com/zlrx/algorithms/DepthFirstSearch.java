@@ -50,7 +50,7 @@ public class DepthFirstSearch {
         while (!stack.isEmpty()) {
             Vertex vertex = stack.pop();
             System.out.println(vertex);
-            for (Vertex neightBour : vertex.getNeighbour()) {
+            for (Vertex neightBour : vertex.getNeighbours()) {
                 if (!neightBour.isVisited()) {
                     neightBour.setVisited(true);
                     stack.push(neightBour);
@@ -62,7 +62,7 @@ public class DepthFirstSearch {
     private void dfsRecursion(Vertex root) {
         root.setVisited(true);
         System.out.println(root);
-        for (Vertex vertex : root.getNeighbour()) {
+        for (Vertex vertex : root.getNeighbours()) {
             if (!vertex.isVisited()) {
                 dfsRecursion(vertex);
             }

@@ -37,7 +37,7 @@ public class BreadthFirstSearch {
         while (!queue.isEmpty()) {
             Vertex actual = queue.remove();
             System.out.println("Actual element is:" + actual);
-            actual.getNeighbour().forEach(neighbour -> visitNeighbour(queue, neighbour));
+            actual.getNeighbours().forEach(neighbour -> visitNeighbour(queue, neighbour));
         }
     }
 

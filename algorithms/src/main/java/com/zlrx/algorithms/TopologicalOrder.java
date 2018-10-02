@@ -17,7 +17,7 @@ public class TopologicalOrder {
 
     private void dfs(Vertex vertex) {
         vertex.setVisited(true);
-        for (Vertex v : vertex.getNeighbour()) {
+        for (Vertex v : vertex.getNeighbours()) {
             if (!v.isVisited()) {
                 dfs(v);
             }
