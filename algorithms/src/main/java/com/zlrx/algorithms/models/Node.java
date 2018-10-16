@@ -16,7 +16,7 @@ public class Node implements Comparable<Node> {
     private final String name;
     private Node previous;
     private List<Edge> adjacencies = new LinkedList<>();
-    private double distanceFromRoot = Double.MAX_VALUE;
+    private double distanceFromStart = Double.MAX_VALUE;
 
     public void addNeighbour(Edge edge) {
         adjacencies.add(edge);
@@ -24,11 +24,11 @@ public class Node implements Comparable<Node> {
 
     @Override
     public int compareTo(@NotNull Node o) {
-        return Double.compare(distanceFromRoot, o.distanceFromRoot);
+        return Double.compare(distanceFromStart, o.distanceFromStart);
     }
 
     @Override
     public String toString() {
-        return "NODE: " + name + "(" + distanceFromRoot + ")";
+        return "NODE: " + name + "(" + distanceFromStart + ")";
     }
 }

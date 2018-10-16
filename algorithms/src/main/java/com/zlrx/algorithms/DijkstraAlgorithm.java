@@ -59,7 +59,7 @@ public class DijkstraAlgorithm {
 
     void computePath(Node startNode) {
 
-        startNode.setDistanceFromRoot(0);
+        startNode.setDistanceFromStart(0);
         PriorityQueue<Node> queue = new PriorityQueue<>();
         queue.add(startNode);
 
@@ -67,10 +67,10 @@ public class DijkstraAlgorithm {
             Node actualNode = queue.poll();
             actualNode.getAdjacencies().forEach(edge -> {
                 Node target = edge.getTo();
-                double newDistance = actualNode.getDistanceFromRoot() + edge.getWeight();
-                if (newDistance < target.getDistanceFromRoot()) {
+                double newDistance = actualNode.getDistanceFromStart() + edge.getWeight();
+                if (newDistance < target.getDistanceFromStart()) {
                     queue.remove(target);
-                    target.setDistanceFromRoot(newDistance);
+                    target.setDistanceFromStart(newDistance);
                     target.setPrevious(actualNode);
                     queue.add(target);
                 }
