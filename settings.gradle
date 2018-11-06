@@ -1,4 +1,4 @@
-rootProject.name = 'blog-source'
+rootProject.name = 'algorithms'
 include 'algorithms'
 include 'spring-boot2-demo'
 

@@ -53,18 +53,18 @@ public class BellmanFord {
         start.setDistanceFromStart(0);
         for (int i = 0; i < nodes.size() - 1; i++) {
             for (Edge edge : edges) {
-                Node startNode = edge.getFrom();
-                double distance = startNode.getDistanceFromStart();
+                Node actualNode = edge.getFrom();
+                double distance = actualNode.getDistanceFromStart();
                 if (distance == Double.MAX_VALUE) {
-                    System.out.println("In iteration " + i + " " + startNode + " distance is max");
+                    System.out.println("In iteration " + i + " " + actualNode + " distance is max");
                     continue;
                 }
-                double newDistence = distance + edge.getWeight();
+                double newDistance = distance + edge.getWeight();
                 Node targetNode = edge.getTo();
-                System.out.println("In iteration " + i + " " + targetNode + " distance calculated from " + startNode + " = " + newDistence);
-                if (newDistence < targetNode.getDistanceFromStart()) {
-                    targetNode.setDistanceFromStart(newDistence);
-                    targetNode.setPrevious(startNode);
+                System.out.println("In iteration " + i + " " + targetNode + " distance calculated from " + actualNode + " = " + newDistance);
+                if (newDistance < targetNode.getDistanceFromStart()) {
+                    targetNode.setDistanceFromStart(newDistance);
+                    targetNode.setPrevious(actualNode);
                     System.out.println("In iteration " + i + " " + targetNode + " distance is lower then old distance, set it ");
                 }
                 System.out.println();
