@@ -10,9 +10,9 @@ public class DijkstraAlgorithm {
 
     /**
      * A--3---E
-     * / \     |
+     * | \     \
      * 1  2     7
-     * /   \     |
+     * |   \     \
      * S    C--3--F
      * |   / \   /
      * 4  5  2  1
