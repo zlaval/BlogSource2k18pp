@@ -20,8 +20,9 @@ fun main(args: Array<String>) {
     println("Min is ${tree.min()?.data}")
     println("Max is ${tree.max()?.data}")
 
-
     tree.delete(20)
+
+    tree.traverseInOrder()
 }
 
 class TreeNode(var data: Int) {
