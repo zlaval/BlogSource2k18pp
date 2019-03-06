@@ -12,11 +12,18 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-//TODO refactor
 public class Kruskal {
 
+    private final List<Vertex> vertices;
+    private final List<Edge> edges;
+
     public static void main(String[] args) {
-        List<Vertex> vertices = new ArrayList<>();
+        Kruskal kruskal = new Kruskal();
+        kruskal.spanningTree();
+    }
+
+    public Kruskal() {
+        vertices = new ArrayList<>();
         vertices.add(new Vertex("0"));
         vertices.add(new Vertex("1"));
         vertices.add(new Vertex("2"));
@@ -27,7 +34,7 @@ public class Kruskal {
         vertices.add(new Vertex("7"));
         vertices.add(new Vertex("8"));
 
-        List<Edge> edges = new ArrayList<>();
+        edges = new ArrayList<>();
         edges.add(new Edge(vertices.get(0), vertices.get(1), 3));
         edges.add(new Edge(vertices.get(0), vertices.get(2), 2));
         edges.add(new Edge(vertices.get(0), vertices.get(3), 5));
@@ -44,12 +51,9 @@ public class Kruskal {
         edges.add(new Edge(vertices.get(5), vertices.get(7), 3));
         edges.add(new Edge(vertices.get(6), vertices.get(7), 6));
         edges.add(new Edge(vertices.get(7), vertices.get(8), 1));
-
-        Kruskal kruskal = new Kruskal();
-        kruskal.spanningTree(vertices, edges);
     }
 
-    public void spanningTree(List<Vertex> vertices, List<Edge> edges) {
+    public void spanningTree() {
         DisjointSet disjointSet = new DisjointSet(vertices);
         List<Edge> minimumSpanningTree = new ArrayList<>();
         Collections.sort(edges);
@@ -62,106 +66,108 @@ public class Kruskal {
                 disjointSet.union(u.getNode(), v.getNode());
             }
         }
-        minimumSpanningTree.forEach(e -> System.out.println("(" + e.getStart() + "  " + e.getTarget() + ") --> "));
+
+        minimumSpanningTree.forEach(e -> System.out.println("(" + e.getStart() + "  " + e.getTarget() + " weight: " + e.getWeight() + ") --> "));
+        int cost = minimumSpanningTree.stream().map(Edge::getWeight).reduce((a, b) -> a += b).orElse(0);
+        System.out.println("Cost: " + cost);
     }
 
-}
-
-@Getter
-@Setter
-@ToString(of = "name")
-@RequiredArgsConstructor
-class Vertex {
-    private final String name;
-    private Node node;
-}
-
-@Getter
-@ToString
-@AllArgsConstructor
-class Edge implements Comparable<Edge> {
-    private Vertex start;
-    private Vertex target;
-    private int weight;
-
-    @Override
-    public int compareTo(Edge o) {
-        return Double.compare(this.weight, o.weight);
-    }
-}
-
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
-class Node {
-    private final int id;
-    private int rank;
-    private Node parent;
-}
-
-@Getter
-@Setter
-@ToString
-class DisjointSet {
-    private int nodeCount;
-    private int setCount;
-    private List<Node> representatives;
-
-    public DisjointSet(List<Vertex> vertices) {
-        makeSets(vertices);
+    @Getter
+    @Setter
+    @ToString(of = "name")
+    @RequiredArgsConstructor
+    private class Vertex {
+        private final String name;
+        private Node node;
     }
 
-    private void makeSets(List<Vertex> vertices) {
-        representatives = vertices.stream()
-                .map(this::makeSet)
-                .collect(Collectors.toList());
-    }
+    @Getter
+    @ToString
+    @AllArgsConstructor
+    private class Edge implements Comparable<Edge> {
+        private Vertex start;
+        private Vertex target;
+        private int weight;
 
-    private Node makeSet(Vertex vertex) {
-        Node node = new Node(nodeCount);
-        vertex.setNode(node);
-        setCount++;
-        nodeCount++;
-        return node;
-    }
-
-    public int find(Node node) {
-        Node current = node;
-        while (Objects.nonNull(current.getParent())) {
-            current = current.getParent();
+        @Override
+        public int compareTo(Edge o) {
+            return Integer.compare(this.weight, o.weight);
         }
-        Node rootNode = current;
-        current = node;
-        while (current != rootNode) {
-            Node tmp = current.getParent();
-            current.setParent(rootNode);
-            current = tmp;
-        }
-        return rootNode.getId();
     }
 
-    public void union(Node a, Node b) {
-        int aIndex = find(a);
-        int bIndex = find(b);
+    @Getter
+    @Setter
+    @ToString
+    @RequiredArgsConstructor
+    private class Node {
+        private final int id;
+        private int rank;
+        private Node parent;
+    }
 
-        if (aIndex == bIndex) {
-            return;
+    @Getter
+    @Setter
+    @ToString
+    private class DisjointSet {
+        private int nodeCount;
+        private int setCount;
+        private List<Node> representatives;
+
+        public DisjointSet(List<Vertex> vertices) {
+            makeSets(vertices);
         }
 
-        Node rootFirstSet = representatives.get(aIndex);
-        Node rootSecondSet = representatives.get(bIndex);
-
-        if (rootFirstSet.getRank() < rootSecondSet.getRank()) {
-            rootFirstSet.setParent(rootSecondSet);
-        } else if (rootFirstSet.getRank() > rootSecondSet.getRank()) {
-            rootSecondSet.setParent(rootFirstSet);
-        } else {
-            rootSecondSet.setParent(rootFirstSet);
-            rootFirstSet.setRank(rootFirstSet.getRank() + 1);
+        private void makeSets(List<Vertex> vertices) {
+            representatives = vertices.stream()
+                    .map(this::makeSet)
+                    .collect(Collectors.toList());
         }
 
-        this.setCount--;
+        private Node makeSet(Vertex vertex) {
+            //for simplicity, id = index in list
+            Node node = new Node(nodeCount++);
+            vertex.setNode(node);
+            return node;
+        }
+
+        public int find(Node node) {
+            Node rootNode = node;
+            while (Objects.nonNull(rootNode.getParent())) {
+                rootNode = rootNode.getParent();
+            }
+
+            Node current = node;
+            while (current != rootNode) {
+                Node tmp = current.getParent();
+                current.setParent(rootNode);
+                current = tmp;
+            }
+            return rootNode.getId();
+        }
+
+        public void union(Node a, Node b) {
+            int aIndex = find(a);
+            int bIndex = find(b);
+
+            if (aIndex == bIndex) {
+                return;
+            }
+
+            Node rootFirstSet = representatives.get(aIndex);
+            Node rootSecondSet = representatives.get(bIndex);
+
+            if (rootFirstSet.getRank() < rootSecondSet.getRank()) {
+                rootFirstSet.setParent(rootSecondSet);
+            } else if (rootFirstSet.getRank() > rootSecondSet.getRank()) {
+                rootSecondSet.setParent(rootFirstSet);
+            } else {
+                rootSecondSet.setParent(rootFirstSet);
+                rootFirstSet.setRank(rootFirstSet.getRank() + 1);
+            }
+        }
+
     }
 
+
 }
+
