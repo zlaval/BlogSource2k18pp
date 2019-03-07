@@ -123,8 +123,6 @@ public class PrimJarnik {
     @RequiredArgsConstructor
     class Vertex {
         private final String name;
-        private boolean visited;
-        private PrimJarnik.Vertex previous;
         private List<Edge> adjacencies;
     }
 
