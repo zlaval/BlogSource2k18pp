@@ -38,7 +38,7 @@ public class SimulatedAnnealing {
 
     private double acceptancePropbability(double currentEnergy, double newEnergy, double temperature) {
         if (currentEnergy > newEnergy)
-            return 1;
+            return 10;
         return Math.exp((currentEnergy - newEnergy) / temperature);
     }
 
