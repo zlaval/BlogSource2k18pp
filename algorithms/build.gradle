@@ -1,7 +1,0 @@
-plugins {
-    id "org.sonarqube" version "2.6"
-}
-
-dependencies {
-    compile group: 'com.google.guava', name: 'guava', version: '27.0.1-jre'
-}

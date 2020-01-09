@@ -1,6 +1,6 @@
 package com.zlrx.algorithms.presentation
 
-import java.util.*
+import java.util.LinkedList
 
 
 fun main(args: Array<String>) {
