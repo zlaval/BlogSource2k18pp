@@ -108,10 +108,10 @@ public class GeneticAlgorithm {
         int generationCounter = 0;
         while (population.getFittest().getFitness() != MAX_FITNESS) {
             generationCounter++;
+            population = algorithm.evolvePopulation(population);
             System.out.println("Generation " + generationCounter + " fittest is " + population.getFittest().getFitness());
             System.out.println(population.getFittest());
             System.out.println();
-            population = algorithm.evolvePopulation(population);
         }
     }
 
@@ -162,6 +162,5 @@ public class GeneticAlgorithm {
         }
         return newPopulation.getFittest();
     }
-
 
 }
