@@ -1,4 +1,4 @@
-package com.zlrx.algorithms.presentation
+package com.zlrx.algorithms.bfs
 
 import java.util.LinkedList
 
