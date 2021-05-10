@@ -7,11 +7,10 @@ import kotlin.math.sin
 //TODO refactor
 
 //[-10,10] step 0.1
-const val NUMBER_OF_VALUES = 200
+const val NUMBER_OF_VALUES = 1000
 const val ITERATIONS = 100_000
 const val TABU_TENURE = 400
 
-//https://academo.org/demos/3d-surface-plotter/?expression=exp(-x*x-y*y)*sin(x)&xRange=-3%2C%203&yRange=-3%2C%203&resolution=100
 val cost = { x: Double, y: Double ->
     exp(-x * x - y * y) * sin(x)
 }
@@ -90,11 +89,15 @@ fun main() {
 }
 
 
+/**
+ * Search the lowest point on z coordinate
+ * https://academo.org/demos/3d-surface-plotter/?expression=exp(-x*x-y*y)*sin(x)&xRange=-3%2C%203&yRange=-3%2C%203&resolution=100
+ */
 fun createGrid(): Array<Array<State>> {
     val grid: Array<Array<State>> = Array(NUMBER_OF_VALUES) { x ->
         Array(NUMBER_OF_VALUES) { y ->
-            val xc = (x - 100) / 10.0
-            val yc = (y - 100) / 10.0
+            val xc = (x - NUMBER_OF_VALUES / 2) / (NUMBER_OF_VALUES / 2.0 / 10.0)
+            val yc = (y - NUMBER_OF_VALUES / 2) / (NUMBER_OF_VALUES / 2.0 / 10.0)
             State(xc, yc, cost(xc, yc))
         }
     }
